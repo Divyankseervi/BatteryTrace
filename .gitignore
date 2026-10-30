@@ -30,3 +30,5 @@ test-results/
 Thumbs.db
 .claude/
 .agents/
+docs/screenshots/
+tools/capture_case_study_screenshots.py
