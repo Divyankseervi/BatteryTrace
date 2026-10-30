@@ -1,5 +1,34 @@
 # Changelog
 
+## Automated Feature Screenshot Suite & Final Academic Case Study Report — 30 October 2026
+
+- **Automated Feature Screenshot Suite**: Added `tools/capture_case_study_screenshots.py` using Playwright Chromium to run the live application and systematically capture 20 high-resolution, pixel-perfect desktop screenshots across all system views, interactive modals, and DBMS lab modules.
+- **Captured Feature Set (20 Screenshots)**:
+  1. `01_overview_dashboard.png`: Executive fleet dashboard, active vehicle KPIs, circular economy mass balance, and ledger integrity.
+  2. `02_actor_persona_mfg.png`: Gigafactory Manufacturer persona view with role-tailored actions.
+  3. `03_assets_catalog.png`: Complete vehicle and battery catalog (Tata Nexon EV Max, Ather 450X, Mahindra XUV400, Indiranagar BESS).
+  4. `04_asset_lineage_pack.png`: Battery pack detail view with multi-tier Bill of Materials (BOM) hierarchy tree.
+  5. `05_dpp_passport_certificate.png`: Official statutory Digital Battery Passport (EU 2023/1542 Article 77) card with QR code and carbon footprint.
+  6. `06_diagnostic_health_modal.png`: Interactive diagnostic health test logger dialog (SoH %, cycles, internal resistance).
+  7. `07_component_transfer_modal.png`: Component swap/transfer modal enforcing temporal validity intervals and hierarchy taxonomy.
+  8. `08_cell_ancestry_lineage.png`: Single cell (`CELL-1001-A1`) upward multi-level ancestry lineage traversal.
+  9. `09_recall_simulation_batch.png`: Safety recall simulation tracing defective production batch `NC-2024-W03` across vehicles.
+  10. `10_event_ledger_hash_chain.png`: Append-only event ledger protected by cryptographic SHA-256 hash chaining.
+  11. `11_event_ledger_verified.png`: Interactive cryptographic verification audit mathematically proving ledger integrity.
+  12. `12_data_quality_rules.png`: 7 automated SQL business rules with evidence inspector and seeded educational anomalies.
+  13. `13_guided_repair_dialog.png`: Guided repair dialog resolving conflicting component parent intervals.
+  14. `14_dbms_lab_schema_erd.png`: Interactive DBMS Lab schema browser and vector Entity-Relationship diagram.
+  15. `15_dbms_lab_normalization.png`: Normalization analysis with mathematical 1NF, 2NF, 3NF, BCNF proofs.
+  16. `16_dbms_lab_sql_runner.png`: Interactive SQL runner executing recursive CTE queries with `EXPLAIN QUERY PLAN`.
+  17. `17_dbms_lab_acid_concurrency.png`: ACID transaction isolation and concurrency locking proof matrix.
+  18. `18_dbms_lab_benchmarks.png`: Traversal benchmark curves showing 11.6× speedup on 90,000 synthetic records.
+  19. `19_dbms_lab_syllabus_map.png`: BCSE302L comprehensive syllabus guide directly mapped to project features.
+  20. `20_dbms_lab_policy_matrix.png`: Global battery passport regulatory matrix (EU 2023/1542, US IRA, India BWMR 2022).
+- **Final Case Study Document**: Created `docs/FINAL_CASE_STUDY_REPORT.md` (and corresponding interactive chat artifact) with complete 14-section academic structure, embedding all 20 screenshots with detailed captions, syllabus mapping, BCNF mathematical proofs, ACID concurrency analysis, and examiner Q&A viva defense guide.
+- **Human-Formatted Microsoft Word (.docx) Report Generated**: Created `tools/build_case_study_docx.py` producing `docs/BatteryTrace_DBMS_Case_Study.docx` (4.84 MB). Adheres to standard academic university formatting (Times New Roman, all-black font, 1-inch margins, standard tables, and simple Figure captions), featuring the official GitHub repository link (`https://github.com/Divyankseervi/BatteryTrace`) and all 20 embedded screenshots.
+- **Publication-Quality Academic PDF Generated**: Created `tools/build_case_study_pdf.py` producing `docs/BatteryTrace_DBMS_Case_Study.pdf` (36 pages, 5.50 MB) featuring VIT academic header styling, the official GitHub repository link (`https://github.com/Divyankseervi/BatteryTrace`), all 20 embedded screenshots, running page headers, and page-numbered footers.
+- **Verification**: Verified 111 out of 111 unit, integration, concurrency, crash recovery, and security tests continue to pass.
+
 ## AWS Cloud Architecture Dual-Mode Deployment (BCSE355L) — 30 October 2026
 
 - **Dual-Mode Cloud Compatibility**: Added support for remote hosting environments via environment variables `HOST` (binds to `0.0.0.0` or custom interface), `ALLOW_CORS=1` (enables cross-origin headers and preflight handling), and `SERVER_NAME` for instance identification.

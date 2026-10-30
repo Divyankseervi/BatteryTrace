@@ -5,6 +5,6 @@
 // For local development / single-host serving:
 //   apiUrl: '' (uses relative paths)
 window.__BATTERYTRACE_CONFIG__ = {
-  apiUrl: ''
+  apiUrl: 'http://refundrift-alb-1254546597.eu-north-1.elb.amazonaws.com'
 };
 
