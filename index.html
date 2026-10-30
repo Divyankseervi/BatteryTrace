@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BatteryTrace · EV battery lifecycle traceability (synthetic demo)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/app.css?v=2.4">
+</head>
+<body>
+<div class="shell">
+  <aside class="side">
+    <div class="brand"><b>BatteryTrace</b><span>Lifecycle traceability · DBMS project</span></div>
+    <nav class="nav" aria-label="Main">
+      <a href="#/overview" data-route="overview">Overview</a>
+      <a href="#/assets" data-route="assets">Assets</a>
+      <a href="#/lineage" data-route="lineage">Asset &amp; lineage</a>
+      <a href="#/recall" data-route="recall">Recall simulation</a>
+      <a href="#/ledger" data-route="ledger">Event ledger</a>
+      <a href="#/quality" data-route="quality">Data quality <span class="count" id="navCount" aria-label="open findings"></span></a>
+      <a href="#/lab" data-route="lab">DBMS lab</a>
+    </nav>
+    <div class="side-foot">SQLite · local file<br>All records are synthetic. Not an official battery passport; no regulatory compliance is claimed.</div>
+  </aside>
+  <div class="main">
+    <div class="banner" role="note">Synthetic demonstration data. Demo roles below are a permissions demo, <b>not authentication</b>.</div>
+    <header class="top">
+      <div><h1 id="title">Overview</h1><p id="purpose"></p></div>
+      <div class="actor-box"><label for="actor">Acting as</label><select id="actor"></select></div>
+    </header>
+    <div id="flash" class="live" role="status" aria-live="polite"></div>
+    <main id="page" tabindex="-1"></main>
+  </div>
+</div>
+<dialog id="dlg" aria-labelledby="dlgTitle"></dialog>
+<script src="/static/config.js"></script>
+<script src="/static/lab.js?v=2.4"></script>
+<script src="/static/app.js?v=2.4"></script>
+</body>
+</html>

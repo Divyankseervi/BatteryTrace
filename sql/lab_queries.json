@@ -1,0 +1,116 @@
+[
+ {
+  "id": "select-project",
+  "title": "Selection and projection (σ, π)",
+  "concept": "Relational algebra",
+  "sql": "SELECT asset_code, status, capacity_kwh\nFROM Asset\nWHERE asset_type = 'BATTERY_PACK' AND capacity_kwh > 50\nORDER BY capacity_kwh DESC"
+ },
+ {
+  "id": "join",
+  "title": "Inner join (⋈)",
+  "concept": "Joins",
+  "sql": "SELECT a.asset_code, p.passport_id, p.passport_version\nFROM Asset a\nJOIN Passport p ON p.asset_id = a.asset_id AND p.status = 'ACTIVE'\nWHERE a.asset_type = 'BATTERY_PACK'\nORDER BY a.asset_code"
+ },
+ {
+  "id": "outer-join",
+  "title": "Left outer join: packs with NO active passport",
+  "concept": "Outer join / NULL handling",
+  "sql": "SELECT a.asset_code, a.status\nFROM Asset a\nLEFT JOIN Passport p ON p.asset_id = a.asset_id AND p.status = 'ACTIVE'\nWHERE a.asset_type = 'BATTERY_PACK' AND p.passport_id IS NULL"
+ },
+ {
+  "id": "group-having",
+  "title": "GROUP BY and HAVING",
+  "concept": "Aggregation",
+  "sql": "SELECT manufacturer, COUNT(*) AS packs, ROUND(SUM(capacity_kwh), 1) AS total_kwh\nFROM Asset\nWHERE asset_type = 'BATTERY_PACK'\nGROUP BY manufacturer\nHAVING COUNT(*) >= 1\nORDER BY packs DESC"
+ },
+ {
+  "id": "subquery-in",
+  "title": "Subquery with IN",
+  "concept": "Nested queries",
+  "sql": "SELECT asset_code, status\nFROM Asset\nWHERE asset_id IN (SELECT asset_id FROM LifecycleEvent WHERE event_type = 'REPURPOSED')"
+ },
+ {
+  "id": "correlated",
+  "title": "Correlated subquery: latest event per asset",
+  "concept": "Nested queries",
+  "sql": "SELECT a.asset_code,\n       (SELECT e.event_type FROM LifecycleEvent e\n        WHERE e.asset_id = a.asset_id\n        ORDER BY e.event_at DESC, e.event_id DESC LIMIT 1) AS latest_event\nFROM Asset a\nORDER BY a.asset_code"
+ },
+ {
+  "id": "window",
+  "title": "Window function: latest event per asset",
+  "concept": "Analytic SQL",
+  "sql": "SELECT asset_code, event_type, event_at\nFROM (\n  SELECT a.asset_code, e.event_type, e.event_at,\n         ROW_NUMBER() OVER (PARTITION BY e.asset_id ORDER BY e.event_at DESC, e.event_id DESC) AS rn\n  FROM LifecycleEvent e JOIN Asset a ON a.asset_id = e.asset_id\n)\nWHERE rn = 1\nORDER BY asset_code"
+ },
+ {
+  "id": "except",
+  "title": "Set difference (EXCEPT): assets with no event",
+  "concept": "Set operations",
+  "sql": "SELECT asset_code\nFROM Asset\nWHERE asset_id IN (SELECT asset_id FROM Asset\n                   EXCEPT\n                   SELECT asset_id FROM LifecycleEvent)\nORDER BY asset_code"
+ },
+ {
+  "id": "recursive",
+  "title": "Recursive CTE: everything a cell ends up inside",
+  "concept": "Recursive queries / graph traversal",
+  "sql": "WITH RECURSIVE up(asset_id, depth) AS (\n  SELECT asset_id, 0 FROM Asset WHERE asset_code = 'CELL-1001-A1'\n  UNION ALL\n  SELECT r.parent_asset_id, u.depth + 1\n  FROM up u JOIN v_open_relationship r ON r.child_asset_id = u.asset_id\n)\nSELECT u.depth, a.asset_code, a.asset_type\nFROM up u JOIN Asset a ON a.asset_id = u.asset_id\nORDER BY u.depth"
+ },
+ {
+  "id": "time-travel",
+  "title": "Temporal query: who held a module on a date?",
+  "concept": "Temporal data",
+  "sql": "SELECT p.asset_code AS parent, r.valid_from, r.valid_to\nFROM AssetRelationship r\nJOIN Asset p ON p.asset_id = r.parent_asset_id\nJOIN Asset c ON c.asset_id = r.child_asset_id\nWHERE c.asset_code = 'MOD-4001-A'\n  AND r.valid_from <= '2024-12-01'\n  AND (r.valid_to IS NULL OR r.valid_to > '2024-12-01')"
+ },
+ {
+  "id": "integrity",
+  "title": "Integrity rule DQ-002 as plain SQL",
+  "concept": "Integrity constraints",
+  "sql": "SELECT c.asset_code, COUNT(*) AS open_parents, GROUP_CONCAT(p.asset_code, ', ') AS parents\nFROM v_open_relationship r\nJOIN Asset c ON c.asset_id = r.child_asset_id\nJOIN Asset p ON p.asset_id = r.parent_asset_id\nGROUP BY r.child_asset_id\nHAVING COUNT(*) > 1"
+ },
+ {
+  "id": "view",
+  "title": "Querying a VIEW",
+  "concept": "Views",
+  "sql": "SELECT asset_code, status, passport_id, open_parents, last_event_at\nFROM v_asset_overview\nWHERE open_parents > 1 OR passport_id IS NULL\nORDER BY asset_code"
+ },
+ {
+  "id": "explain-index",
+  "title": "EXPLAIN: index used (look for SEARCH ... USING INDEX)",
+  "concept": "Indexing / query plans",
+  "sql": "EXPLAIN QUERY PLAN\nSELECT event_type, event_at\nFROM LifecycleEvent\nWHERE asset_id = 'A001'\nORDER BY event_at DESC"
+ },
+ {
+  "id": "explain-scan",
+  "title": "EXPLAIN: no index on location (look for SCAN)",
+  "concept": "Indexing / query plans",
+  "sql": "EXPLAIN QUERY PLAN\nSELECT * FROM LifecycleEvent\nWHERE location = 'Chennai, India'"
+ },
+ {
+  "id": "hash-chain",
+  "title": "Hash chain: each row stores the previous row's hash",
+  "concept": "Integrity / audit",
+  "sql": "SELECT event_id, event_type,\n       substr(prev_hash, 1, 12) AS prev_hash,\n       substr(event_hash, 1, 12) AS event_hash\nFROM LifecycleEvent\nORDER BY event_id\nLIMIT 6"
+ },
+ {
+  "id": "case-study-diagnostics",
+  "title": "Diagnostic measurements (Case Study Code 3: FR-5)",
+  "concept": "Time-series diagnostics / State of Health",
+  "sql": "SELECT t.test_time, a.asset_code, t.state_of_health_pct, t.cycle_count, t.recorded_by\nFROM TestResult t\nJOIN Asset a ON a.asset_id = t.asset_id\nWHERE a.asset_code = 'PACK-1001'\nORDER BY t.test_time DESC\nLIMIT 5"
+ },
+ {
+  "id": "passport-succession",
+  "title": "Passport succession history (EU 2023/1542 Art. 77(7))",
+  "concept": "Self-referencing relationship / Lineage",
+  "sql": "SELECT p.passport_id, a.asset_code, p.passport_version, p.status, p.issued_at, p.previous_passport_id, COALESCE(prev.status, 'INITIAL_ISSUANCE') AS previous_status\nFROM Passport p\nJOIN Asset a ON a.asset_id = p.asset_id\nLEFT JOIN Passport prev ON prev.passport_id = p.previous_passport_id\nORDER BY a.asset_code, p.passport_version"
+ },
+ {
+  "id": "circularity-decision",
+  "title": "Circular economy decision matrix (EU Art. 14 / BWMR)",
+  "concept": "CASE expressions / Window function partitioning",
+  "sql": "SELECT a.asset_code, a.asset_type, a.status, t.state_of_health_pct AS latest_soh_pct, t.cycle_count,\n       CASE\n         WHEN t.state_of_health_pct >= 75.0 THEN 'Second-life candidate (EU Art. 14)'\n         WHEN t.state_of_health_pct < 75.0  THEN 'Recycle / Hydrometallurgy (BWMR)'\n         ELSE 'Diagnostics pending'\n       END AS circularity_recommendation\nFROM Asset a\nLEFT JOIN (\n  SELECT asset_id, state_of_health_pct, cycle_count,\n         ROW_NUMBER() OVER (PARTITION BY asset_id ORDER BY test_time DESC) AS rn\n  FROM TestResult\n) t ON t.asset_id = a.asset_id AND t.rn = 1\nWHERE a.asset_type IN ('BATTERY_PACK', 'STORAGE_SYSTEM')\nORDER BY a.asset_code"
+ },
+ {
+  "id": "feoc-provenance",
+  "title": "US IRA / FEOC critical mineral multi-tier recursive trace",
+  "concept": "Recursive CTE with path string aggregation",
+  "sql": "WITH RECURSIVE lineage(asset_id, parent_asset_id, depth, path) AS (\n  SELECT a.asset_id, r.parent_asset_id, 1, a.asset_code\n  FROM Asset a\n  LEFT JOIN v_open_relationship r ON r.child_asset_id = a.asset_id\n  WHERE a.batch_code = 'NC-2024-W03'\n  UNION ALL\n  SELECT p.asset_id, r2.parent_asset_id, l.depth + 1, l.path || ' -> ' || p.asset_code\n  FROM lineage l\n  JOIN Asset p ON p.asset_id = l.parent_asset_id\n  LEFT JOIN v_open_relationship r2 ON r2.child_asset_id = p.asset_id\n  WHERE l.parent_asset_id IS NOT NULL\n)\nSELECT DISTINCT l.depth, a.asset_code, a.asset_type, a.manufacturer, a.batch_code, l.path\nFROM lineage l\nJOIN Asset a ON a.asset_id = l.asset_id\nORDER BY l.depth DESC"
+ }
+]

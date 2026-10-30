@@ -1,0 +1,267 @@
+{
+ "generated_at": "2026-10-27T18:04:02",
+ "environment": {
+  "python": "3.12.7",
+  "sqlite": "3.45.3",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "cpus": 24
+ },
+ "config": {
+  "seed": 42,
+  "warmup": 5,
+  "samples": 30,
+  "database": ":memory:"
+ },
+ "scales": [
+  {
+   "vehicles": 50,
+   "assets": 1506,
+   "links": 1485,
+   "correct": true,
+   "closure_build_ms": 7.16,
+   "plan_with_index": [
+    "SEARCH AssetRelationship USING INDEX idx_relationship_child (child_asset_id=?)"
+   ],
+   "plan_without_index": [
+    "SCAN AssetRelationship"
+   ],
+   "results": [
+    {
+     "workload": "one cell -> ancestors",
+     "strategy": "recursive_cte",
+     "p50_ms": 0.0132,
+     "p95_ms": 0.0138,
+     "result_size": 4
+    },
+    {
+     "workload": "one cell -> ancestors",
+     "strategy": "frontier_cte",
+     "p50_ms": 0.013,
+     "p95_ms": 0.0143,
+     "result_size": 4
+    },
+    {
+     "workload": "one cell -> ancestors",
+     "strategy": "app_bfs_n_plus_1",
+     "p50_ms": 0.0059,
+     "p95_ms": 0.0063,
+     "result_size": 4
+    },
+    {
+     "workload": "one cell -> ancestors",
+     "strategy": "closure_table",
+     "p50_ms": 0.003,
+     "p95_ms": 0.0032,
+     "result_size": 4
+    },
+    {
+     "workload": "whole batch -> ancestors",
+     "strategy": "recursive_cte",
+     "p50_ms": 2.469,
+     "p95_ms": 2.7418,
+     "result_size": 485
+    },
+    {
+     "workload": "whole batch -> ancestors",
+     "strategy": "frontier_cte",
+     "p50_ms": 1.1874,
+     "p95_ms": 1.2243,
+     "result_size": 485
+    },
+    {
+     "workload": "whole batch -> ancestors",
+     "strategy": "app_bfs_n_plus_1",
+     "p50_ms": 0.8152,
+     "p95_ms": 1.0609,
+     "result_size": 485
+    },
+    {
+     "workload": "whole batch -> ancestors",
+     "strategy": "closure_table",
+     "p50_ms": 0.4155,
+     "p95_ms": 0.4533,
+     "result_size": 485
+    },
+    {
+     "workload": "one cell -> ancestors",
+     "strategy": "recursive_cte_noidx",
+     "p50_ms": 0.4464,
+     "p95_ms": 0.488,
+     "result_size": 4
+    },
+    {
+     "workload": "whole batch -> ancestors",
+     "strategy": "recursive_cte_noidx",
+     "p50_ms": 2.9341,
+     "p95_ms": 3.0043,
+     "result_size": 485
+    }
+   ]
+  },
+  {
+   "vehicles": 500,
+   "assets": 15062,
+   "links": 14885,
+   "correct": true,
+   "closure_build_ms": 71.12,
+   "plan_with_index": [
+    "SEARCH AssetRelationship USING INDEX idx_relationship_child (child_asset_id=?)"
+   ],
+   "plan_without_index": [
+    "SCAN AssetRelationship"
+   ],
+   "results": [
+    {
+     "workload": "one cell -> ancestors",
+     "strategy": "recursive_cte",
+     "p50_ms": 0.0131,
+     "p95_ms": 0.0144,
+     "result_size": 4
+    },
+    {
+     "workload": "one cell -> ancestors",
+     "strategy": "frontier_cte",
+     "p50_ms": 0.0126,
+     "p95_ms": 0.0133,
+     "result_size": 4
+    },
+    {
+     "workload": "one cell -> ancestors",
+     "strategy": "app_bfs_n_plus_1",
+     "p50_ms": 0.0057,
+     "p95_ms": 0.0062,
+     "result_size": 4
+    },
+    {
+     "workload": "one cell -> ancestors",
+     "strategy": "closure_table",
+     "p50_ms": 0.0029,
+     "p95_ms": 0.0031,
+     "result_size": 4
+    },
+    {
+     "workload": "whole batch -> ancestors",
+     "strategy": "recursive_cte",
+     "p50_ms": 30.3019,
+     "p95_ms": 33.6319,
+     "result_size": 4787
+    },
+    {
+     "workload": "whole batch -> ancestors",
+     "strategy": "frontier_cte",
+     "p50_ms": 18.1893,
+     "p95_ms": 18.7812,
+     "result_size": 4787
+    },
+    {
+     "workload": "whole batch -> ancestors",
+     "strategy": "app_bfs_n_plus_1",
+     "p50_ms": 8.5455,
+     "p95_ms": 8.8911,
+     "result_size": 4787
+    },
+    {
+     "workload": "whole batch -> ancestors",
+     "strategy": "closure_table",
+     "p50_ms": 5.2241,
+     "p95_ms": 6.0851,
+     "result_size": 4787
+    },
+    {
+     "workload": "one cell -> ancestors",
+     "strategy": "recursive_cte_noidx",
+     "p50_ms": 4.6908,
+     "p95_ms": 5.0544,
+     "result_size": 4
+    }
+   ]
+  },
+  {
+   "vehicles": 3000,
+   "assets": 90375,
+   "links": 89242,
+   "correct": true,
+   "closure_build_ms": 457.87,
+   "plan_with_index": [
+    "SEARCH AssetRelationship USING INDEX idx_relationship_child (child_asset_id=?)"
+   ],
+   "plan_without_index": [
+    "SCAN AssetRelationship"
+   ],
+   "results": [
+    {
+     "workload": "one cell -> ancestors",
+     "strategy": "recursive_cte",
+     "p50_ms": 0.0138,
+     "p95_ms": 0.019,
+     "result_size": 4
+    },
+    {
+     "workload": "one cell -> ancestors",
+     "strategy": "frontier_cte",
+     "p50_ms": 0.0141,
+     "p95_ms": 0.0149,
+     "result_size": 4
+    },
+    {
+     "workload": "one cell -> ancestors",
+     "strategy": "app_bfs_n_plus_1",
+     "p50_ms": 0.0065,
+     "p95_ms": 0.0082,
+     "result_size": 4
+    },
+    {
+     "workload": "one cell -> ancestors",
+     "strategy": "closure_table",
+     "p50_ms": 0.0031,
+     "p95_ms": 0.0033,
+     "result_size": 4
+    },
+    {
+     "workload": "whole batch -> ancestors",
+     "strategy": "recursive_cte",
+     "p50_ms": 338.087,
+     "p95_ms": 351.2583,
+     "result_size": 29277
+    },
+    {
+     "workload": "whole batch -> ancestors",
+     "strategy": "frontier_cte",
+     "p50_ms": 254.7955,
+     "p95_ms": 262.6333,
+     "result_size": 29277
+    },
+    {
+     "workload": "whole batch -> ancestors",
+     "strategy": "app_bfs_n_plus_1",
+     "p50_ms": 59.0908,
+     "p95_ms": 60.0907,
+     "result_size": 29277
+    },
+    {
+     "workload": "whole batch -> ancestors",
+     "strategy": "closure_table",
+     "p50_ms": 39.7296,
+     "p95_ms": 41.1706,
+     "result_size": 29277
+    },
+    {
+     "workload": "one cell -> ancestors",
+     "strategy": "recursive_cte_noidx",
+     "p50_ms": 36.3723,
+     "p95_ms": 36.9582,
+     "result_size": 4
+    }
+   ]
+  }
+ ],
+ "notes": [
+  "All strategies were checked against generator ground truth at every scale; a mismatch would mark that scale invalid.",
+  "FINDING: for whole-batch recall the simple app_bfs_n_plus_1 was FASTER than the recursive CTE (about 7x at the largest scale). The CTE enumerates every path, so an ancestor shared by many starting cells is re-walked once per path (and carries a growing path string); BFS visits each asset once. This is an in-process SQLite result: BFS round trips to a networked server would cost far more, and that was not measured.",
+  "Possible improvement, NOT implemented: a distinct-asset CTE (UNION instead of UNION ALL, no path column) for membership and depth, then reconstruct paths only for the reached nodes. The ground-truth tests would make that refactor safe.",
+  "closure_table answers fastest but is a snapshot of CURRENT links: it must be rebuilt or incrementally maintained on every transfer or recycle, and it cannot answer as-of-a-past-date questions without storing history. Build time is reported per scale.",
+  "recursive_cte_noidx is the index ablation (indexes on parent and child dropped). The single-cell lookup is orders of magnitude slower without them; see plan_with_index and plan_without_index. The unindexed whole-batch workload is omitted at the two larger scales because it takes too long.",
+  "NOT measured: PostgreSQL, Neo4j or any graph database, concurrent readers, disk-bound datasets, or the AS_OF/ALL temporal modes. Do not quote these numbers as a relational-vs-graph conclusion.",
+  "Timings are wall-clock on a shared sandbox VM with 1 CPU and an in-memory database. Re-run on your own machine for your own numbers."
+ ]
+}

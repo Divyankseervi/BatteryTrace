@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local database and generated fixtures
+batterytrace.db
+*.sqlite
+*.sqlite3
+research/generated/
+benchmarks/results/
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Frontend build/test output (if added in a future phase)
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+
+# Editor / operating system
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+.claude/
+.agents/

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" role="img" aria-labelledby="t d">
+<title id="t">BatteryTrace entity-relationship diagram</title>
+<desc id="d">Asset is the central entity. Passport, LifecycleEvent, TestResult and AssetRelationship reference Asset. AssetRelationship references Asset twice (parent and child). LifecycleEvent and TestResult reference AppUser. HierarchyRule constrains which parent and child types may be linked. Passport references itself through previous_passport_id.</desc>
+<style>
+ text{font-family:system-ui,Segoe UI,Arial,sans-serif;font-size:12px;fill:#1f2328}
+ .h{font-weight:700;font-size:13px} .pk{font-weight:700} .fk{fill:#2f5b7c} .m{fill:#5d646c;font-size:11px}
+ .box{fill:#fff;stroke:#8a9097;stroke-width:1} .hd{fill:#f1efe9;stroke:#8a9097}
+ .ln{stroke:#5d646c;stroke-width:1.2;fill:none} .card{font-weight:700;fill:#3d6b57;font-size:12px}
+</style>
+<!-- Asset -->
+<rect class="box" x="360" y="190" width="240" height="190"/><rect class="hd" x="360" y="190" width="240" height="26"/>
+<text class="h" x="372" y="208">Asset</text>
+<text class="pk" x="372" y="236">PK asset_id</text><text x="372" y="254">asset_code  UNIQUE</text><text x="372" y="272">asset_type  CHECK</text>
+<text x="372" y="290">manufacturer, chemistry</text><text x="372" y="308">capacity_kwh  CHECK ≥ 0</text><text x="372" y="326">batch_code  (recall scope)</text>
+<text x="372" y="344">status  CHECK</text><text x="372" y="362">created_at  CHECK date format</text>
+<!-- Passport -->
+<rect class="box" x="30" y="60" width="250" height="160"/><rect class="hd" x="30" y="60" width="250" height="26"/>
+<text class="h" x="42" y="78">Passport</text>
+<text class="pk" x="42" y="106">PK passport_id</text><text class="fk" x="42" y="124">FK asset_id → Asset</text><text x="42" y="142">passport_version  CHECK &gt; 0</text>
+<text x="42" y="160">status  (ACTIVE|SUPERSEDED|CLOSED)</text><text x="42" y="178">issued_at</text><text class="fk" x="42" y="196">FK previous_passport_id → Passport</text>
+<text class="m" x="42" y="214">UNIQUE(asset_id, version) · one ACTIVE per asset</text>
+<path class="ln" d="M280 150 H320 V245 H360"/><text class="card" x="284" y="143">N</text><text class="card" x="338" y="239">1</text>
+<path class="ln" d="M30 120 H12 V236 H30"/>
+<text class="m" x="14" y="258">self-reference (chain)</text>
+<!-- LifecycleEvent -->
+<rect class="box" x="30" y="300" width="270" height="230"/><rect class="hd" x="30" y="300" width="270" height="26"/>
+<text class="h" x="42" y="318">LifecycleEvent  (append-only)</text>
+<text class="pk" x="42" y="346">PK event_id</text><text class="fk" x="42" y="364">FK asset_id → Asset</text><text x="42" y="382">event_type  CHECK</text><text x="42" y="400">event_at, location, organization, notes</text>
+<text class="fk" x="42" y="418">FK actor_id → AppUser</text><text x="42" y="436">evidence_status, evidence_ref</text><text x="42" y="454">idempotency_key  UNIQUE</text>
+<text x="42" y="472">prev_hash, event_hash  (SHA-256 chain)</text><text class="m" x="42" y="496">triggers block UPDATE and DELETE</text>
+<path class="ln" d="M300 360 H330 V330 H360"/><text class="card" x="304" y="353">N</text><text class="card" x="338" y="324">1</text>
+<!-- AssetRelationship -->
+<rect class="box" x="680" y="190" width="250" height="190"/><rect class="hd" x="680" y="190" width="250" height="26"/>
+<text class="h" x="692" y="208">AssetRelationship</text>
+<text class="pk" x="692" y="236">PK relationship_id</text><text class="fk" x="692" y="254">FK parent_asset_id → Asset</text><text class="fk" x="692" y="272">FK child_asset_id → Asset</text>
+<text x="692" y="290">relationship_type</text><text x="692" y="308">valid_from  (inclusive)</text><text x="692" y="326">valid_to  NULL = open (exclusive)</text>
+<text class="m" x="692" y="350">triggers: no overlap, follow HierarchyRule</text><text class="m" x="692" y="366">CHECK parent ≠ child, to &gt; from</text>
+<path class="ln" d="M600 235 H680"/><text class="card" x="604" y="229">1</text><text class="card" x="662" y="229">N</text>
+<path class="ln" d="M600 300 H640 V300 H680"/><text class="card" x="604" y="294">1</text><text class="card" x="662" y="294">N</text>
+<text class="m" x="606" y="262">parent</text><text class="m" x="606" y="326">child</text>
+<!-- HierarchyRule -->
+<rect class="box" x="680" y="420" width="250" height="100"/><rect class="hd" x="680" y="420" width="250" height="26"/>
+<text class="h" x="692" y="438">HierarchyRule  (lookup)</text>
+<text class="pk" x="692" y="464">PK (parent_type, child_type)</text><text x="692" y="482">relationship_type</text>
+<text class="m" x="692" y="504">e.g. MODULE contains CELL</text>
+<path class="ln" d="M805 420 V380" stroke-dasharray="4 3"/><text class="m" x="812" y="404">checked by trigger</text>
+<!-- AppUser -->
+<rect class="box" x="360" y="440" width="240" height="90"/><rect class="hd" x="360" y="440" width="240" height="26"/>
+<text class="h" x="372" y="458">AppUser  (demo roles)</text>
+<text class="pk" x="372" y="484">PK user_id</text><text x="372" y="502">display_name, organization</text><text x="372" y="520">role  CHECK (4 roles)</text>
+<path class="ln" d="M300 490 H360"/><text class="card" x="304" y="484">N</text><text class="card" x="344" y="484">1</text>
+<!-- TestResult (FR-5 Diagnostics) -->
+<rect class="box" x="680" y="35" width="250" height="125"/><rect class="hd" x="680" y="35" width="250" height="26"/>
+<text class="h" x="692" y="53">TestResult  (FR-5 Diagnostics)</text>
+<text class="pk" x="692" y="78">PK test_result_id</text><text class="fk" x="692" y="96">FK asset_id → Asset</text>
+<text x="692" y="114">test_time, state_of_health_pct</text><text x="692" y="132">cycle_count</text><text class="fk" x="692" y="150">FK recorded_by → AppUser</text>
+<path class="ln" d="M600 210 H640 V95 H680"/><text class="card" x="604" y="204">1</text><text class="card" x="662" y="89">N</text>
+<text class="m" x="360" y="40">Crow-foot summary: “1” = one side, “N” = many side. Asset 1 — N Passport / LifecycleEvent / TestResult; Asset 1 — N AssetRelationship (parent, child).</text>
+</svg>
