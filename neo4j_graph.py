@@ -115,7 +115,11 @@ def lineage(asset_code: str, direction: str = 'down', max_depth: int = 8) -> dic
         'ORDER BY length(p), path'
     )
     results = _run([{'statement': query, 'parameters': {'asset_code': asset_code}}])
-    rows = results[0].get('data', {}).get('rows', []) if results else []
+    raw_data = results[0].get('data', []) if results else []
+    if isinstance(raw_data, list):
+        rows = [d.get('row', d) if isinstance(d, dict) else d for d in raw_data]
+    else:
+        rows = raw_data.get('rows', [])
     return {'asset_code': asset_code, 'direction': direction, 'paths': [
         {'path': row[0], 'types': row[1], 'depth': len(row[0]) - 1} for row in rows
     ]}

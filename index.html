@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BatteryTrace · EV battery lifecycle traceability (synthetic demo)</title>
+<title>BatteryTrace · EV Battery Lifecycle Traceability (AWS Cloud Prototype)</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔋</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +13,7 @@
 <body>
 <div class="shell">
   <aside class="side">
-    <div class="brand"><b>BatteryTrace</b><span>Lifecycle traceability · DBMS project</span></div>
+    <div class="brand"><b>BatteryTrace</b><span>Lifecycle traceability · AWS Cloud Architecture</span></div>
     <nav class="nav" aria-label="Main">
       <a href="#/overview" data-route="overview">Overview</a>
       <a href="#/assets" data-route="assets">Assets</a>
@@ -21,12 +21,12 @@
       <a href="#/recall" data-route="recall">Recall simulation</a>
       <a href="#/ledger" data-route="ledger">Event ledger</a>
       <a href="#/quality" data-route="quality">Data quality <span class="count" id="navCount" aria-label="open findings"></span></a>
-      <a href="#/lab" data-route="lab">DBMS lab</a>
+      <a href="#/lab" data-route="lab">Architecture lab</a>
     </nav>
-    <div class="side-foot">SQLite · local file<br>All records are synthetic. Not an official battery passport; no regulatory compliance is claimed.</div>
+    <div class="side-foot">AWS Multi-Tier Architecture<br>S3 Static Web · Multi-AZ EC2 · ALB<br>Educational cloud prototype.</div>
   </aside>
   <div class="main">
-    <div class="banner" role="note">Synthetic demonstration data. Demo roles below are a permissions demo, <b>not authentication</b>.</div>
+    <div class="banner" role="note">AWS Cloud Prototype (Free Tier · Synthetic Data). Multi-tier architecture: Amazon S3 + Multi-AZ EC2 (Server1 &amp; Server2) + Application Load Balancer.</div>
     <header class="top">
       <div><h1 id="title">Overview</h1><p id="purpose"></p></div>
       <div class="actor-box"><label for="actor">Acting as</label><select id="actor"></select></div>

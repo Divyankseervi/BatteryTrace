@@ -1,8 +1,8 @@
 # BatteryTrace
 
-EV battery lifecycle traceability: a B.Tech DBMS project. Tracks cells, modules, packs, vehicles and storage systems through manufacture, installation, repair, second life and recycling, with dated parent/child links, versioned passports, a tamper-evident event ledger, a recall simulator and a built-in DBMS lab.
+EV battery lifecycle traceability: an AWS Multi-Tier Cloud Architecture & Engineering Project (BCSE355L). Tracks cells, modules, packs, vehicles and storage systems through manufacture, installation, repair, second life and recycling, with dated parent/child links, versioned passports, a tamper-evident event ledger, a recursive recall simulator, and an interactive Cloud & Data Architecture Lab.
 
-> **All data is synthetic.** This is an educational prototype, not an official EU/India battery passport and makes no regulatory-compliance claim. The "demo roles" are a permissions demo, **not authentication**: run it on localhost only.
+> **AWS Multi-Tier Cloud Deployment**: Built with production-style decoupled cloud tiers using **Amazon S3** for static frontend hosting, multi-AZ **Amazon EC2 (Server1 & Server2)** for dynamic compute and backend processing, and an **AWS Application Load Balancer (ALB)** distributing traffic across Availability Zones with health monitoring. All records are synthetic.
 
 ## Run (Python 3.11+, no packages to install)
 ```bash
@@ -10,6 +10,12 @@ python server.py        # Windows: double-click start.bat   |   then open http:/
 ```
 Reset to the original demo data: stop the server, delete `batterytrace.db`, start again.
 Another port: `PORT=8010 python server.py` (Windows: `set PORT=8010`).
+
+## Cloud Deployment (AWS Multi-Tier)
+Full deployment instructions, architecture diagrams, and viva defense notes are documented in [`docs/AWS_CLOUD_ARCHITECTURE.md`](docs/AWS_CLOUD_ARCHITECTURE.md).
+- **Frontend**: Hosted on Amazon S3 Static Website Hosting.
+- **Backend**: Hosted on two EC2 instances (`Server1` and `Server2`) across multiple Availability Zones.
+- **Load Balancer**: AWS Application Load Balancer (ALB) with `/api/health` target group monitoring.
 
 ## Optional Neo4j graph projection
 The SQLite database remains authoritative. To start a local Neo4j 5.26 Community instance with Docker Desktop, set a local password and launch the included compose file (PowerShell):
@@ -19,11 +25,11 @@ docker compose -f docker-compose.neo4j.yml up -d
 $env:NEO4J_PASSWORD = 'choose-a-local-password'
 python server.py
 ```
-Open **DBMS Lab → Neo4j Graph Projection**, choose **Acting as → Manufacturer** or **Auditor**, sync the SQLite dataset, then request upstream/downstream paths by asset code. `NEO4J_URI` defaults to `http://127.0.0.1:7474`; optional `NEO4J_USER` and `NEO4J_DATABASE` default to `neo4j`. Keep `NEO4J_PASSWORD` local and do not commit it. Stop the graph with `docker compose -f docker-compose.neo4j.yml down`; the named volume retains Neo4j data. This is an optional lineage read projection, not the relational-vs-graph benchmark.
+Open **Architecture Lab → Neo4j Graph Projection**, choose **Acting as → Manufacturer** or **Auditor**, sync the SQLite dataset, then request upstream/downstream paths by asset code. `NEO4J_URI` defaults to `http://127.0.0.1:7474`; optional `NEO4J_USER` and `NEO4J_DATABASE` default to `neo4j`. Keep `NEO4J_PASSWORD` local and do not commit it. Stop the graph with `docker compose -f docker-compose.neo4j.yml down`; the named volume retains Neo4j data. This is an optional lineage read projection, not the relational-vs-graph benchmark.
 
 ## Test
 ```bash
-python -m unittest discover -s tests -v        # 108 tests, ~8 s, uses throw-away databases only
+python -m unittest discover -s tests -v        # 111 tests, ~8 s, uses throw-away databases only
 python benchmarks/run_benchmark.py              # regenerates research/benchmark_results.json (3-4 min)
 ```
 Browser checks used during development (Playwright, optional) are described in `docs/ACCEPTANCE_CHECKLIST.md`.
@@ -37,7 +43,7 @@ Browser checks used during development (Playwright, optional) are described in `
 | Recall simulation | Up/down trace from asset codes or a **production batch**, current / as-of-date / all-history, with uncertainty warnings; CSV + JSON export |
 | Event ledger | Append-only events with actor, evidence status, hash chain, "verify chain" |
 | Data quality | 7 SQL rules, each with evidence, limits and a guided repair for double-parent links |
-| DBMS lab | ERD, live schema/triggers/views/indexes, normalization analysis (BCNF), 19 runnable SQL examples with EXPLAIN, query copy/clear controls, ACID/concurrency mapping, benchmark results, syllabus map, and global regulatory policy matrix (EU 2023/1542, US IRA, India BWMR) |
+| Architecture lab | ERD, live schema/triggers/views/indexes, normalization analysis (BCNF), 19 runnable SQL examples with EXPLAIN, query copy/clear controls, ACID/concurrency mapping, benchmark results, syllabus map, and global regulatory policy matrix (EU 2023/1542, US IRA, India BWMR) |
 
 ## Architecture (small on purpose)
 ```
@@ -48,7 +54,7 @@ recall.py     recursive-CTE trace + uncertainty         sql/lab_queries.json   e
 audit.py      SHA-256 event chain                       sqlguard.py            read-only SQL sandbox
 db.py         connection, tx(), seed                    tools/synthetic.py     deterministic fleet + ground truth
 ```
-Key design points (full reasoning in `docs/ARCHITECTURE_DECISIONS.md` and the DBMS lab):
+Key design points (full reasoning in `docs/ARCHITECTURE_DECISIONS.md` and the Architecture lab):
 - **Two independent layers enforce integrity**: the Python state machine gives friendly errors; triggers/CHECK/FK/unique indexes refuse bad data even if the app is bypassed.
 - **Time is modelled**: relationships have half-open `[valid_from, valid_to)` intervals; a trigger forbids a child having two parents at once; recall can be run "as of" a date.
 - **Writes are serialized** with `BEGIN IMMEDIATE`; idempotency keys make retries safe.

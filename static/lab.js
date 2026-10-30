@@ -1,4 +1,4 @@
-/* Static teaching text for the DBMS lab (trusted constants, not user data). */
+/* Static text for the Cloud & Data Architecture lab (trusted constants, not user data). */
 window.BTLab = {
 normalization: `
 <p>Functional dependencies (FDs) that hold in this schema, and what the design does about them:</p>
@@ -30,8 +30,8 @@ acid: `
 
 syllabus: `
 <div class="notice ok">
-  <b>Comprehensive Syllabus Mapping (BCSE302L - Database Management Systems):</b><br>
-  Every single concept taught in the university DBMS curriculum is actively implemented in this project. Below, each topic is explained in <b>simple, beginner-friendly language</b> alongside the exact feature and code where it is used.
+  <b>Comprehensive Cloud Architecture &amp; Data Engineering Guide (BCSE355L - Cloud Architecture Design):</b><br>
+  Core cloud architecture patterns (Multi-Tier decoupled presentation/compute/data layers, Multi-AZ high availability on AWS EC2, Application Load Balancing, health monitoring) and data layer guarantees are actively implemented in this project. Below, each topic is explained alongside the exact cloud service, feature, and code where it is used.
 </div>
 
 <h3>1. Conceptual &amp; Relational Data Modeling</h3>
@@ -256,7 +256,7 @@ policy: `
 <h3>1. Global regulatory comparison (EU vs. US vs. India)</h3>
 <table>
 <thead>
-  <tr><th>Jurisdiction &amp; Regulation</th><th>Enforcement Timeline</th><th>Core Legal Mandate</th><th>DBMS Architecture Requirement</th></tr>
+  <tr><th>Jurisdiction &amp; Regulation</th><th>Enforcement Timeline</th><th>Core Legal Mandate</th><th>Cloud &amp; Data Architecture Requirement</th></tr>
 </thead>
 <tbody>
   <tr>
@@ -312,7 +312,7 @@ policy: `
 <h3>3. Technical mapping: Policy mandates to relational database constraints</h3>
 <table>
 <thead>
-  <tr><th>Real-World Policy Requirement</th><th>DBMS Technical Challenge</th><th>How BatteryTrace Enforces It</th></tr>
+  <tr><th>Real-World Policy Requirement</th><th>Technical Architecture Challenge</th><th>How BatteryTrace Enforces It</th></tr>
 </thead>
 <tbody>
   <tr>
@@ -349,6 +349,6 @@ policy: `
 </table>
 
 <div class="notice">
-  <b>Academic &amp; Engineering Scope:</b> BatteryTrace is a pedagogical B.Tech DBMS semester project designed to demonstrate core database theory (BCNF, ACID, triggers, recursive CTEs, temporal intervals, hash chaining). It does not claim formal legal compliance with EU 2023/1542, US IRA, or India BWMR, and does not replace a production enterprise dataspace connector. All operational data is synthetically generated for demonstration and testing.
+  <b>Academic &amp; Engineering Scope:</b> BatteryTrace is a pedagogical B.Tech Cloud Architecture Design (CAD / BCSE355L) project hosted on AWS Free Tier infrastructure (Amazon S3 + Multi-AZ EC2 + Application Load Balancer). It demonstrates decoupled multi-tier cloud topology, load balancing, high availability, and temporal data integrity. All operational data is synthetically generated for demonstration and testing.
 </div>`
 };

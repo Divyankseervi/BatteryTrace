@@ -247,7 +247,7 @@ flowchart TD
 
 ---
 
-### Step 5: Shared Database Layer (Apart from DBMS)
+### Step 5: Shared Persistence Tier & Data Layer in the Cloud
 
 In the case study prompt: *"Backend: The dynamic application and database-related processing are hosted on two Amazon EC2 instances, referred to as Server1 and Server2."*
 
