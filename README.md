@@ -1,8 +1,8 @@
 # BatteryTrace
 
-EV battery lifecycle traceability: an AWS Multi-Tier Cloud Architecture & Engineering Project (BCSE355L). Tracks cells, modules, packs, vehicles and storage systems through manufacture, installation, repair, second life and recycling, with dated parent/child links, versioned passports, a tamper-evident event ledger, a recursive recall simulator, and an interactive Cloud & Data Architecture Lab.
+EV battery lifecycle traceability: a digital battery passport and circular lifecycle intelligence platform. Tracks cells, modules, packs, vehicles and storage systems through manufacture, installation, repair, second life and recycling, with dated parent/child links, versioned passports, a tamper-evident event ledger, a recursive recall simulator, and an interactive System Architecture Lab.
 
-> **AWS Multi-Tier Cloud Deployment**: Built with production-style decoupled cloud tiers using **Amazon S3** for static frontend hosting, multi-AZ **Amazon EC2 (Server1 & Server2)** for dynamic compute and backend processing, and an **AWS Application Load Balancer (ALB)** distributing traffic across Availability Zones with health monitoring. All records are synthetic.
+> **Architecture Overview**: Built with a decoupled multi-tier architecture featuring static web presentation, load-balanced compute services across redundant availability zones, and an ACID-compliant relational data store with cryptographic SHA-256 audit chaining. All demonstration records are synthetic.
 
 ## Run (Python 3.11+, no packages to install)
 ```bash
@@ -11,11 +11,11 @@ python server.py        # Windows: double-click start.bat   |   then open http:/
 Reset to the original demo data: stop the server, delete `batterytrace.db`, start again.
 Another port: `PORT=8010 python server.py` (Windows: `set PORT=8010`).
 
-## Cloud Deployment (AWS Multi-Tier)
-Full deployment instructions, architecture diagrams, and viva defense notes are documented in [`docs/AWS_CLOUD_ARCHITECTURE.md`](docs/AWS_CLOUD_ARCHITECTURE.md).
-- **Frontend**: Hosted on Amazon S3 Static Website Hosting.
-- **Backend**: Hosted on two EC2 instances (`Server1` and `Server2`) across multiple Availability Zones.
-- **Load Balancer**: AWS Application Load Balancer (ALB) with `/api/health` target group monitoring.
+## Deployment
+The platform supports standalone local execution and distributed cloud deployment (see [`docs/AWS_CLOUD_ARCHITECTURE.md`](docs/AWS_CLOUD_ARCHITECTURE.md) for AWS infrastructure blueprints):
+- **Frontend**: Static web assets hosted via object storage or CDN.
+- **Backend**: Load-balanced application services across redundant availability zones.
+- **Load Balancer**: Layer 7 load balancer with automated health check monitoring (`/api/health`).
 
 ## Optional Neo4j graph projection
 The SQLite database remains authoritative. To start a local Neo4j 5.26 Community instance with Docker Desktop, set a local password and launch the included compose file (PowerShell):

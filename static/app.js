@@ -13,7 +13,7 @@ const ROUTES = {
   recall: ['Recall Simulation', 'Trace which vehicles and battery packs contain a defective component or manufacturing batch across the recursive graph.'],
   ledger: ['Event Ledger', 'Append-only, tamper-proof lifecycle event ledger protected by cryptographic SHA-256 hash chaining.'],
   quality: ['Data Quality', 'Rule-based database integrity findings. Flags anomalies like active passports on recycled batteries.'],
-  lab: ['Architecture & Cloud Lab', 'AWS Multi-Tier architecture mapping, live relational processing, query runner, ACID concurrency, and benchmarks.'],
+  lab: ['System Architecture Lab', 'System architecture, live relational processing, query runner, ACID concurrency, and benchmarks.'],
 };
 
 /* ---------- Friendly Catalogs (Generalised, Non-Technical Product & Location Maps) ---------- */
@@ -235,7 +235,7 @@ async function routeOnce() {
   $$('.nav a').forEach(a => { if (a.dataset.route === name) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   $('#title').textContent = ROUTES[name][0];
   $('#purpose').textContent = ROUTES[name][1];
-  document.title = `${ROUTES[name][0]} · BatteryTrace (AWS Cloud Architecture)`;
+  document.title = `${ROUTES[name][0]} · BatteryTrace`;
   const page = $('#page'); page.innerHTML = loading();
   try { await PAGES[name](page, arg, qs); } catch (e) { page.innerHTML = errState(e, true); }
   refreshNavCount();
@@ -828,7 +828,7 @@ PAGES.lab = async (page, tab) => {
     <section class="panel"><header><h2>Views &amp; Indexes</h2></header>${table([{ h: 'Type' }, { h: 'Name' }, { h: 'On Table' }], [...by('view'), ...by('index')].map(o => [esc(o.type), `<span class="mono">${esc(o.name)}</span>`, esc(o.tbl_name)]))}</section></div>`;
   } else if (tab === 'norm') b.innerHTML = `<section class="panel"><header><h2>Database Normalization (1NF to BCNF Proofs)</h2></header><div class="body">${BTLab.normalization}</div></section>`;
   else if (tab === 'acid') b.innerHTML = `<section class="panel"><header><h2>Transactions, ACID Guarantees &amp; Concurrency Control</h2></header><div class="body">${BTLab.acid}</div></section>`;
-  else if (tab === 'map') b.innerHTML = `<section class="panel"><header><h2>Cloud Architecture &amp; Data Engineering Guide (BCSE355L)</h2><p>How the AWS Multi-Tier Cloud Architecture &amp; Data Persistence Layer are designed</p></header><div class="body">${BTLab.syllabus}</div></section>`;
+  else if (tab === 'map') b.innerHTML = `<section class="panel"><header><h2>System Architecture &amp; Engineering Guide</h2><p>How the multi-tier architecture, data schemas, and persistence layer are designed</p></header><div class="body">${BTLab.syllabus}</div></section>`;
   else if (tab === 'policy') b.innerHTML = `<section class="panel"><header><h2>Global Battery Passport Policies &amp; Open-Source Architectures</h2></header><div class="body">${BTLab.policy}</div></section>`;
   else if (tab === 'sql') {
     const qs = await api('/api/lab-queries'); S.labq = qs;

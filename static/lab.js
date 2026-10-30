@@ -30,8 +30,8 @@ acid: `
 
 syllabus: `
 <div class="notice ok">
-  <b>Comprehensive Cloud Architecture &amp; Data Engineering Guide (BCSE355L - Cloud Architecture Design):</b><br>
-  Core cloud architecture patterns (Multi-Tier decoupled presentation/compute/data layers, Multi-AZ high availability on AWS EC2, Application Load Balancing, health monitoring) and data layer guarantees are actively implemented in this project. Below, each topic is explained alongside the exact cloud service, feature, and code where it is used.
+  <b>Comprehensive System Architecture &amp; Engineering Guide:</b><br>
+  Core software architecture patterns (multi-tier decoupled presentation/compute/data layers, high availability, load balancing, health monitoring) and data layer guarantees are actively implemented in this project. Below, each topic is explained alongside the exact component, feature, and code where it is used.
 </div>
 
 <h3>1. Conceptual &amp; Relational Data Modeling</h3>
@@ -349,6 +349,6 @@ policy: `
 </table>
 
 <div class="notice">
-  <b>Academic &amp; Engineering Scope:</b> BatteryTrace is a pedagogical B.Tech Cloud Architecture Design (CAD / BCSE355L) project hosted on AWS Free Tier infrastructure (Amazon S3 + Multi-AZ EC2 + Application Load Balancer). It demonstrates decoupled multi-tier cloud topology, load balancing, high availability, and temporal data integrity. All operational data is synthetically generated for demonstration and testing.
+  <b>Engineering Scope:</b> BatteryTrace is a modular software prototype demonstrating distributed multi-tier architecture, tamper-evident ledgers, recursive graph traversal, and temporal data integrity. All operational data is synthetically generated for demonstration and testing.
 </div>`
 };
